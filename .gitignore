@@ -1,0 +1,17 @@
+# raw data and large regenerable files (see README: how to rebuild)
+data/raw/
+data/processed/clean_data.csv
+data/processed/features_final.csv
+*.pkl
+archive/**/*.csv
+archive/**/*.pkl
+
+# python / notebooks / tools
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.pytest_cache/
+.benchmarks/
+clears_env/
+.venv/
+.env

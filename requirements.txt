@@ -1,0 +1,15 @@
+# CLEARS code. Python 3.11. Versions pinned to the ones the delivered models were built with.
+pandas==2.2.3
+numpy==1.26.4
+scipy==1.16.1
+scikit-learn==1.8.0
+xgboost==3.2.0
+joblib==1.5.2
+matplotlib==3.9.0
+seaborn>=0.13
+pytest==8.4.2
+# only needed to re-run the notebooks
+nbformat>=5.9
+nbconvert>=7.16
+ipykernel>=6.29
+# optional: `pip install shap` gives the shap beeswarm plot; the code works without it (XGBoost's built-in TreeSHAP is used)

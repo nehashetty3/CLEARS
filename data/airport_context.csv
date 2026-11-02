@@ -1,0 +1,3 @@
+airport_code,name,type,latitude_deg,longitude_deg,elevation_ft,municipality,iso_region,hub_size,runway_count,max_runway_length_ft,avg_runway_length_ft
+MEM,Frederick W. Smith International Airport,large_airport,35.043845,-89.97634,341.0,Memphis,US-TN,large_hub,4,11120.0,9596.0
+ORD,Chicago O'Hare International Airport,large_airport,41.9786,-87.9048,680.0,Chicago,US-IL,large_hub,8,13000.0,9610.0

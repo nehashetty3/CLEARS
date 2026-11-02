@@ -1,0 +1,3 @@
+airport_code,disruption_rate,avg_recovery_time,weather_sensitivity,congestion_sensitivity,peak_hour_disruption_rate,data_period_days,days_with_data,hub_size,runway_count,max_runway_length_ft,latitude_deg,longitude_deg,elevation_ft,municipality
+MEM,15.4232,70.2602,0.0521,0.0503,14.4145,1399,492,large_hub,4,11120.0,35.043845,-89.97634,341.0,Memphis
+ORD,18.0396,68.1543,0.0429,0.08,17.8438,1399,492,large_hub,8,13000.0,41.9786,-87.9048,680.0,Chicago

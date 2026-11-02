@@ -1,0 +1,473 @@
+{
+  "best_params": {
+    "max_depth": 7,
+    "learning_rate": 0.05,
+    "best_iteration": 14,
+    "val_pr_auc": 0.40643886630686205
+  },
+  "search": [
+    {
+      "max_depth": 3,
+      "learning_rate": 0.05,
+      "best_iteration": 52,
+      "val_pr_auc": 0.40623575911374726
+    },
+    {
+      "max_depth": 3,
+      "learning_rate": 0.1,
+      "best_iteration": 23,
+      "val_pr_auc": 0.4051628073646159
+    },
+    {
+      "max_depth": 5,
+      "learning_rate": 0.05,
+      "best_iteration": 13,
+      "val_pr_auc": 0.4060430968739491
+    },
+    {
+      "max_depth": 5,
+      "learning_rate": 0.1,
+      "best_iteration": 11,
+      "val_pr_auc": 0.40609683740606983
+    },
+    {
+      "max_depth": 7,
+      "learning_rate": 0.05,
+      "best_iteration": 14,
+      "val_pr_auc": 0.40643886630686205
+    },
+    {
+      "max_depth": 7,
+      "learning_rate": 0.1,
+      "best_iteration": 61,
+      "val_pr_auc": 0.4045106731604746
+    }
+  ],
+  "scale_pos_weight": 4.799636083700749,
+  "validation": {
+    "threshold": 0.21300138533115387,
+    "n": 48508,
+    "positive_rate": 0.20229652840768533,
+    "accuracy": 0.7333429537395894,
+    "precision_1": 0.3726961343989561,
+    "recall_1": 0.46570875369407927,
+    "f1_1": 0.4140430351075878,
+    "f1_0": 0.82739755274149,
+    "roc_auc": 0.6850560751592971,
+    "pr_auc": 0.39922420871796865,
+    "confusion_matrix": {
+      "tn": 31003,
+      "fp": 7692,
+      "fn": 5243,
+      "tp": 4570
+    }
+  },
+  "test_tuned_threshold": {
+    "threshold": 0.21300138533115387,
+    "n": 73608,
+    "positive_rate": 0.18385229866318878,
+    "accuracy": 0.7460737963264863,
+    "precision_1": 0.32721425700120593,
+    "recall_1": 0.3608955885612946,
+    "f1_1": 0.3432306124600302,
+    "f1_0": 0.8426113829079549,
+    "roc_auc": 0.6503550959832193,
+    "pr_auc": 0.3224376179169516,
+    "confusion_matrix": {
+      "tn": 50033,
+      "fp": 10042,
+      "fn": 8649,
+      "tp": 4884
+    }
+  },
+  "test_raw_0.5": {
+    "threshold": 0.5,
+    "n": 73608,
+    "positive_rate": 0.18385229866318878,
+    "accuracy": 0.6351619389196826,
+    "precision_1": 0.26595221363316934,
+    "recall_1": 0.559299490135225,
+    "f1_1": 0.3604886528707166,
+    "f1_0": 0.7447801336209764,
+    "roc_auc": 0.6509454354253543,
+    "pr_auc": 0.3347342241659388,
+    "confusion_matrix": {
+      "tn": 39184,
+      "fp": 20891,
+      "fn": 5964,
+      "tp": 7569
+    }
+  },
+  "test_brier_calibrated": 0.1410706341266632,
+  "test_brier_raw": 0.23444518446922302,
+  "test_brier_constant_baseline": 0.15018122296772843,
+  "risk_band_share_test": {
+    "low (<0.30)": 0.8993315943919139,
+    "medium": 0.09162047603521356,
+    "high (>0.65)": 0.009047929572872513
+  },
+  "test_by_airport": {
+    "MEM": {
+      "threshold": 0.21300138533115387,
+      "n": 5781,
+      "positive_rate": 0.2072305829441273,
+      "accuracy": 0.7279017471025774,
+      "precision_1": 0.3556581986143187,
+      "recall_1": 0.38564273789649417,
+      "f1_1": 0.3700440528634361,
+      "f1_0": 0.8264754550468836,
+      "roc_auc": 0.6601731302115643,
+      "pr_auc": 0.32198518385639013,
+      "confusion_matrix": {
+        "tn": 3746,
+        "fp": 837,
+        "fn": 736,
+        "tp": 462
+      }
+    },
+    "ORD": {
+      "threshold": 0.21300138533115387,
+      "n": 67827,
+      "positive_rate": 0.18185973137541098,
+      "accuracy": 0.7476226281569287,
+      "precision_1": 0.3245028252733544,
+      "recall_1": 0.35849209566274826,
+      "f1_1": 0.34065172174716896,
+      "f1_0": 0.8439448638004595,
+      "roc_auc": 0.6498782932766287,
+      "pr_auc": 0.3225408159500443,
+      "confusion_matrix": {
+        "tn": 46287,
+        "fp": 9205,
+        "fn": 7913,
+        "tp": 4422
+      }
+    }
+  },
+  "test_by_month": {
+    "4": {
+      "threshold": 0.21300138533115387,
+      "n": 23406,
+      "positive_rate": 0.18862684781679911,
+      "accuracy": 0.7458344014355294,
+      "precision_1": 0.32848837209302323,
+      "recall_1": 0.33272933182332953,
+      "f1_1": 0.3305952514909418,
+      "f1_0": 0.8431377719182597,
+      "roc_auc": 0.6364726916898646,
+      "pr_auc": 0.30864706717221485,
+      "confusion_matrix": {
+        "tn": 15988,
+        "fp": 3003,
+        "fn": 2946,
+        "tp": 1469
+      }
+    },
+    "7": {
+      "threshold": 0.21300138533115387,
+      "n": 25569,
+      "positive_rate": 0.23415072939888146,
+      "accuracy": 0.6423794438577966,
+      "precision_1": 0.33671252715423605,
+      "recall_1": 0.5436779689326875,
+      "f1_1": 0.41586814871598315,
+      "f1_0": 0.7423063916131214,
+      "roc_auc": 0.6578192294792122,
+      "pr_auc": 0.3932401435954768,
+      "confusion_matrix": {
+        "tn": 13170,
+        "fp": 6412,
+        "fn": 2732,
+        "tp": 3255
+      }
+    },
+    "10": {
+      "threshold": 0.21300138533115387,
+      "n": 24633,
+      "positive_rate": 0.1271059148297,
+      "accuracy": 0.8539357772094345,
+      "precision_1": 0.20330368487928843,
+      "recall_1": 0.05110188438198659,
+      "f1_1": 0.0816743236345074,
+      "f1_0": 0.9206580224045162,
+      "roc_auc": 0.57823940734933,
+      "pr_auc": 0.15972209701400666,
+      "confusion_matrix": {
+        "tn": 20875,
+        "fp": 627,
+        "fn": 2971,
+        "tp": 160
+      }
+    }
+  },
+  "band_observed_rate": {
+    "high": {
+      "share": 0.009047929572872513,
+      "observed_disruption_rate": 0.7297297297297297
+    },
+    "low": {
+      "share": 0.8993315943919139,
+      "observed_disruption_rate": 0.15782954167799632
+    }
+  },
+  "baselines": {
+    "logistic_regression": {
+      "threshold": 0.2692832764505119,
+      "n": 73608,
+      "positive_rate": 0.18385229866318878,
+      "accuracy": 0.7608140419519618,
+      "precision_1": 0.3366749538856364,
+      "recall_1": 0.3102046848444543,
+      "f1_1": 0.322898238597031,
+      "f1_0": 0.8547527513323544,
+      "roc_auc": 0.6439369505328124,
+      "pr_auc": 0.3028132956349456,
+      "confusion_matrix": {
+        "tn": 51804,
+        "fp": 8271,
+        "fn": 9335,
+        "tp": 4198
+      }
+    },
+    "always_disrupted": {
+      "threshold": 0.5,
+      "n": 73608,
+      "positive_rate": 0.18385229866318878,
+      "accuracy": 0.18385229866318878,
+      "precision_1": 0.18385229866318878,
+      "recall_1": 1.0,
+      "f1_1": 0.31060006196853374,
+      "f1_0": 0.0,
+      "roc_auc": 0.5,
+      "pr_auc": 0.18385229866318878,
+      "confusion_matrix": {
+        "tn": 0,
+        "fp": 60075,
+        "fn": 0,
+        "tp": 13533
+      }
+    },
+    "rolling_rate_only": {
+      "roc_auc": 0.634299421715368,
+      "pr_auc": 0.28742299879167094
+    },
+    "base_rate": 0.18385229866318878,
+    "train_base_rate": 0.17242461174596663,
+    "ablation": {
+      "full": {
+        "roc_auc": 0.6503550959832193,
+        "pr_auc": 0.3224376179169516,
+        "f1_1": 0.3432306124600302,
+        "precision_1": 0.32721425700120593,
+        "recall_1": 0.3608955885612946,
+        "n_features": 20
+      },
+      "weather_only": {
+        "roc_auc": 0.5861316350694541,
+        "pr_auc": 0.22354241768703545,
+        "f1_1": 0.331524796312762,
+        "precision_1": 0.21971810659996152,
+        "recall_1": 0.6750166260252716,
+        "n_features": 10
+      },
+      "time_only": {
+        "roc_auc": 0.6046317285048411,
+        "pr_auc": 0.23453009673783132,
+        "f1_1": 0.3402428389347287,
+        "precision_1": 0.22006725241349387,
+        "recall_1": 0.7495751126875047,
+        "n_features": 6
+      },
+      "no_history_features": {
+        "roc_auc": 0.618376035473036,
+        "pr_auc": 0.25166648016117493,
+        "f1_1": 0.3351082147871467,
+        "precision_1": 0.2611909481334655,
+        "recall_1": 0.4673760437449198,
+        "n_features": 16
+      }
+    }
+  },
+  "diagnostics": {
+    "date_grouped_cv": {
+      "roc_auc": 0.708177644575948,
+      "pr_auc": 0.3929912075969708,
+      "f1_1_at_base_rate_threshold": 0.393212140437081
+    },
+    "train_before_2021_test_2021": {
+      "roc_auc": 0.701504131263037,
+      "pr_auc": 0.36501913429597155,
+      "base_rate": 0.16995617879053462
+    },
+    "train_before_2022_test_2022": {
+      "roc_auc": 0.6584858270145738,
+      "pr_auc": 0.3522139528622088,
+      "base_rate": 0.19048824478688733
+    }
+  },
+  "severity": {
+    "best_params": {
+      "max_depth": 3,
+      "learning_rate": 0.1,
+      "best_iteration": 52
+    },
+    "class_counts_test": {
+      "none": 60075,
+      "minor": 6812,
+      "moderate": 4876,
+      "severe": 1845
+    },
+    "accuracy": 0.5621128138245843,
+    "macro_f1": 0.2877719177105014,
+    "baseline_always_none": {
+      "accuracy": 0.8161477013368112
+    },
+    "report": {
+      "none": {
+        "precision": 0.8711974699096722,
+        "recall": 0.6373699542238868,
+        "f1-score": 0.7361621133178244,
+        "support": 60075.0
+      },
+      "minor": {
+        "precision": 0.10986900761264659,
+        "recall": 0.23517322372284205,
+        "f1-score": 0.14976861590239798,
+        "support": 6812.0
+      },
+      "moderate": {
+        "precision": 0.11589982527664532,
+        "recall": 0.20406070549630845,
+        "f1-score": 0.14783448480796374,
+        "support": 4876.0
+      },
+      "severe": {
+        "precision": 0.07533507934062549,
+        "recall": 0.26504065040650404,
+        "f1-score": 0.11732245681381957,
+        "support": 1845.0
+      },
+      "accuracy": 0.5621128138245843,
+      "macro avg": {
+        "precision": 0.2930753455348974,
+        "recall": 0.33541113346238527,
+        "f1-score": 0.2877719177105014,
+        "support": 73608.0
+      },
+      "weighted avg": {
+        "precision": 0.7307593801504357,
+        "recall": 0.5621128138245843,
+        "f1-score": 0.6274109288370905,
+        "support": 73608.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        38290,
+        11542,
+        6064,
+        4179
+      ],
+      [
+        3133,
+        1602,
+        1169,
+        908
+      ],
+      [
+        1923,
+        1043,
+        995,
+        915
+      ],
+      [
+        605,
+        394,
+        357,
+        489
+      ]
+    ],
+    "mean_expected_severity_by_true_class": {
+      "none": 1.3333264138467402,
+      "minor": 1.4432018921479224,
+      "moderate": 1.521888618257395,
+      "severe": 1.5937697826685298
+    }
+  },
+  "data": {
+    "file": "features_final_v2.csv",
+    "features": [
+      "wind_speed_knots",
+      "visibility_km",
+      "temperature_c",
+      "humidity_pct",
+      "precip_mm_hr",
+      "wind_category_enc",
+      "visibility_risk",
+      "rain_severity_enc",
+      "temp_stress",
+      "storm_flag",
+      "hour_of_day",
+      "day_of_week",
+      "month",
+      "is_peak_hour",
+      "is_weekend",
+      "delay_last_1h",
+      "delay_last_3h",
+      "delay_last_24h",
+      "congestion_level",
+      "runway_count"
+    ],
+    "train_rows": 248613,
+    "val_rows": 48508,
+    "test_rows": 73608,
+    "train_range": [
+      "2019-01-01",
+      "2021-07-31"
+    ],
+    "val_range": [
+      "2021-10-01",
+      "2022-01-31"
+    ],
+    "test_range": [
+      "2022-04-01",
+      "2022-10-31"
+    ],
+    "train_rate": 0.17242461174596663,
+    "val_rate": 0.20229652840768533,
+    "test_rate": 0.18385229866318878
+  },
+  "weather_model": {
+    "best_params": {
+      "max_depth": 4,
+      "learning_rate": 0.03,
+      "best_iteration": 561,
+      "val_pr_auc": 0.2924407108995656
+    },
+    "test": {
+      "threshold": 0.20851647853851318,
+      "n": 73608,
+      "positive_rate": 0.18385229866318878,
+      "accuracy": 0.6592489946744919,
+      "precision_1": 0.2625128521488793,
+      "recall_1": 0.47166186359269935,
+      "f1_1": 0.33729655463961106,
+      "f1_0": 0.7706641796503547,
+      "roc_auc": 0.6202511589939408,
+      "pr_auc": 0.25397350026074295,
+      "confusion_matrix": {
+        "tn": 42143,
+        "fp": 17932,
+        "fn": 7150,
+        "tp": 6383
+      }
+    },
+    "scenario_response": {
+      "low visibility (0.5 km)": 0.06662558019161224,
+      "heavy rain (10 mm/h)": 0.027569247409701347,
+      "strong wind (28 kn)": 0.08947873115539551,
+      "all three together": 0.23646970093250275,
+      "clear day (16 km, dry, 5 kn)": -0.0087634501978755
+    }
+  }
+}

@@ -1,0 +1,26 @@
+Disruption model - TEST (2022-04-01 to 2022-10-31), calibrated probability, threshold 0.224 chosen on validation
+
+               precision    recall  f1-score   support
+
+no disruption      0.860     0.802     0.830     58051
+   disruption      0.323     0.420     0.365     13068
+
+     accuracy                          0.732     71119
+    macro avg      0.591     0.611     0.597     71119
+ weighted avg      0.761     0.732     0.744     71119
+
+ROC-AUC 0.662 | PR-AUC 0.336
+Confusion matrix [[tn fp] [fn tp]]: [[46545, 11506], [7582, 5486]]
+
+Severity model - TEST (2022-04-01 to 2022-10-31)
+
+              precision    recall  f1-score   support
+
+        none      0.872     0.643     0.740     58051
+       minor      0.109     0.224     0.147      6554
+    moderate      0.115     0.218     0.150      4734
+      severe      0.080     0.267     0.123      1780
+
+    accuracy                          0.567     71119
+   macro avg      0.294     0.338     0.290     71119
+weighted avg      0.732     0.567     0.631     71119

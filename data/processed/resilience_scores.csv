@@ -1,0 +1,3 @@
+airport_code,resilience_index,tier,disruption_rate,lat,lon
+MEM,50.0,Moderate,15.4232,35.043845,-89.97634
+ORD,50.0,Moderate,18.0396,41.9786,-87.9048
