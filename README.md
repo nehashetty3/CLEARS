@@ -50,14 +50,8 @@ archive/                     superseded material, kept for traceability - safe t
   v2_intermediate/           intermediate results (original data with rolling features rebuilt only)
 ```
 
-## What was wrong with the original data (all proven against the raw files)
-1. **Weather was 5-6 hours stale:** NOAA times are UTC and had been used as local times.
-2. **12,135 duplicated flight records** (3.3% of rows, 9.7% of MEM's) that do not exist in BTS.
-3. **Leaking rolling features:** the "last 1 h" window contained flights of the same hour whose outcomes were not yet known.
 
-Evidence and reproduction: `docs/data_quality_report.md` (Checks 1, 8, 13) and `python tools/reconcile_with_original.py`.
-
-## Results (test = April / July / October 2022, used once)
+## Results 
 | | |
 |---|---|
 | Disruption model (XGBoost, calibrated) | **F1 0.365** (precision 0.323, recall 0.420), ROC-AUC 0.662, PR-AUC 0.336 |
@@ -90,13 +84,7 @@ python -c "import sys; sys.path.insert(0,'src'); import data_prep as d, features
 ```
 `run_pipeline(cancelled_policy='drop')` removes cancelled flights (default); `'disrupt'` keeps them labelled as disrupted. Set `CLEARS_DATA=<path>` to train on a different feature file. The virtual environment used during development lives outside OneDrive (`C:\Users\shrey\.venvs\clears_env`) because a venv inside OneDrive syncs tens of thousands of files.
 
-## Who uses what
-| Role | Start here |
-|---|---|
-| Person 3 (dashboard) | `src/predict.py`, `src/explain.py` (`get_global_importance()` takes no arguments), `data/processed/resilience_scores.csv`, `docs/kpi_definitions.md` |
-| Person 4 (report, slides, tests) | `docs/` (all of it), `notebooks/`, `assets/`. Several statements in the project report PDF are not supported (see below) |
-| Person 1 (data) | `src/data_prep.py`, `src/features.py`, `src/resilience.py`, `tests/`, `tools/` |
-| Person 2 (ML) | `src/model_train.py`, `src/predict.py`, `src/explain.py`, `src/verify_models.py` |
+
 
 ## Decisions and open items
 1. **Cancelled flights:** 15,875 are removed (4.2% of departures). Counting them as disrupted would raise the disruption rate from 17.8% to about 21.3%. The team must choose, then regenerate and retrain.
