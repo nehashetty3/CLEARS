@@ -2,7 +2,6 @@
 data/raw/
 data/processed/clean_data.csv
 data/processed/features_final.csv
-*.pkl
 archive/**/*.csv
 archive/**/*.pkl
 
@@ -15,3 +14,4 @@ __pycache__/
 clears_env/
 .venv/
 .env
+.claude/

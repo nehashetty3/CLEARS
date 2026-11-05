@@ -131,22 +131,9 @@ def make_shap_summary_plot(model, X_test: pd.DataFrame, path=None, max_rows: int
     return str(path)
 
 
-def scenario_risk(base_features: dict, overrides: dict, mode: str = 'full') -> dict:
-    """Disruption probability before and after a what-if change.
-
-    `overrides` may use RAW weather names (visibility_km, wind_speed_knots, precip_mm_hr, temperature_c --
-    preferred) and/or the flag / category names from the dashboard guide (visibility_risk, wind_category,
-    rain_severity, temp_stress, storm_flag, is_peak_hour). For a flag override the matching raw value in the
-    base row is replaced by a representative one, otherwise the model would still see the old raw value.
-
-    mode='full' (default): the main model, so base_probability equals the dashboard gauge value. The delay-history
-        inputs of the base row are held fixed (a real storm would also raise them), so this is a conservative
-        'weather changes, nothing else does' view.
-    mode='weather': the weather + time model without delay history, 'risk under these conditions before delays
-        have accumulated'. Its base_probability is NOT the gauge value.
-    Combined extreme overrides (e.g. visibility 0.5 km AND 10 mm/h rain AND 28 kn wind) go beyond what the data
-    contains (only ~70 historical flights had visibility < 1 km together with rain >= 2.5 mm/h, 34% disrupted);
-    treat such results as an upper bound, not a forecast."""
+def apply_overrides(base_features: dict, overrides: dict) -> dict:
+    """The what-if feature dict: base row with the overrides applied (flags, raw weather and hour kept consistent).
+    scenario_risk scores this dict; the dashboard also passes it to predict_severity and explain_prediction."""
     merged = {k: v for k, v in base_features.items() if v is not None}
     for key in overrides:
         for raw in _OVERRIDE_CLEARS.get(key, []):
@@ -164,6 +151,26 @@ def scenario_risk(base_features: dict, overrides: dict, mode: str = 'full') -> d
             merged['hour_of_day'] = 17
         elif not overrides['is_peak_hour'] and in_peak:
             merged['hour_of_day'] = 12
+    return merged
+
+
+def scenario_risk(base_features: dict, overrides: dict, mode: str = 'full') -> dict:
+    """Disruption probability before and after a what-if change.
+
+    `overrides` may use RAW weather names (visibility_km, wind_speed_knots, precip_mm_hr, temperature_c --
+    preferred) and/or the flag / category names from the dashboard guide (visibility_risk, wind_category,
+    rain_severity, temp_stress, storm_flag, is_peak_hour). For a flag override the matching raw value in the
+    base row is replaced by a representative one, otherwise the model would still see the old raw value.
+
+    mode='full' (default): the main model, so base_probability equals the dashboard gauge value. The delay-history
+        inputs of the base row are held fixed (a real storm would also raise them), so this is a conservative
+        'weather changes, nothing else does' view.
+    mode='weather': the weather + time model without delay history, 'risk under these conditions before delays
+        have accumulated'. Its base_probability is NOT the gauge value.
+    Combined extreme overrides (e.g. visibility 0.5 km AND 10 mm/h rain AND 28 kn wind) go beyond what the data
+    contains (only ~70 historical flights had visibility < 1 km together with rain >= 2.5 mm/h, 34% disrupted);
+    treat such results as an upper bound, not a forecast."""
+    merged = apply_overrides(base_features, overrides)
     predict = P.predict_weather_risk if mode == 'weather' else P.predict_disruption
     base = predict(base_features)['probability']
     scen = predict(merged)['probability']

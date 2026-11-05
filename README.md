@@ -1,8 +1,10 @@
 # CLEARS - Climate-Linked Evaluation and Analytics for Resilience in Airport Systems
 
-Predicts weather-driven flight disruptions at Chicago O'Hare (ORD) and Memphis (MEM), explains them (SHAP), estimates delay severity, scores airport resilience and supports what-if scenarios. This repository holds the **data pipeline (Person 1)** and the **models and explainability (Person 2)**; the dashboard (Person 3) and final report/slides (Person 4) are still to be built on top of it.
+Predicts weather-driven flight disruptions at Chicago O'Hare (ORD) and Memphis (MEM), explains them (SHAP), estimates delay severity, scores airport resilience and supports what-if scenarios. This repository holds the **data pipeline (Person 1)**, the **models and explainability (Person 2)** and the **recommendation engine and Streamlit dashboard (Person 3)**; the final report and slides (Person 4) are still to be written on top of it.
 
-**Status:** complete and verified for Person 1 and Person 2; not yet reviewed by Person 1 as the team handoff rule requires. Data version: **v3** = rebuilt from the raw NOAA and BTS files (the original delivery, v1, is in `archive/`).
+**Status:** complete and verified for Persons 1, 2 and 3 (23 automated tests); not yet reviewed by Person 1 as the team handoff rule requires. Data version: **v3** = rebuilt from the raw NOAA and BTS files (the original delivery, v1, is in `archive/`).
+
+**Run the dashboard:** `pip install -r requirements.txt`, then `streamlit run app/streamlit_app.py` from this folder. It needs only files that are in the repository (`data/models/*.pkl`, `data/processed/dashboard_hourly.csv`, `resilience_scores.csv`).
 
 ## Directory map
 ```
@@ -18,8 +20,9 @@ data/
     clean_data.csv           merged flights + weather (data_prep.py output)        [git-ignored, regenerable]
     features_final.csv       feature matrix, 358,594 rows x 38 columns             [git-ignored, regenerable]
     airport_resilience_inputs.csv, resilience_scores.csv      per-airport inputs and the 0-100 index
-  models/                    disruption_model.pkl, severity_model.pkl, scenario_model.pkl,
-                             metrics.json, classification_report.txt              [pkl git-ignored]
+    dashboard_hourly.csv     one row per airport-hour (16,000 rows) read by the dashboard; built by src/dashboard_data.py
+  models/                    disruption_model.pkl, severity_model.pkl, scenario_model.pkl (committed, ~3.6 MB),
+                             metrics.json, classification_report.txt
 
 src/                         all code
   config.py                  feature list, split dates, risk bands, paths
@@ -31,7 +34,11 @@ src/                         all code
   explain.py                 explain_prediction(), get_global_importance(), scenario_risk(), SHAP plot
   verify_models.py           final verification checks -> docs/model_verification.md
   make_model_report.py       generates docs/model_report.md from metrics.json
-tests/                       10 unit tests (features, leakage, data prep)
+  recommend.py               get_recommendation() / build_recommendations(): operational actions from risk, severity, drivers (Person 3)
+  dashboard_data.py          airport-hour table, model scoring and daily series for the dashboard (Person 3)
+app/                         Streamlit dashboard (Person 3): streamlit_app.py (entry), tabs.py, charts.py, components.py, data.py, theme.py
+.streamlit/config.toml       dashboard theme
+tests/                       23 tests: features and leakage, data prep, recommendation rules, dashboard end to end
 notebooks/                   01_eda.ipynb, 02_baseline_model.ipynb (both run end to end)
 tools/                       reconcile_with_original.py - reproduces the evidence about the original delivery
 assets/                      eda_key_chart.png, shap_summary.png, shap_global_importance.csv
@@ -43,6 +50,8 @@ docs/
   data_sources.md            sources, URLs, file and row counts
   model_report.md            model evaluation (generated)
   model_verification.md      verification log (generated)
+  dashboard_layout.md        dashboard layout, panels and design decisions (T-3.1)
+  demo_script.md             4-minute demo script with verified numbers (T-3.8)
   reference/                 team task guide, project report (PDF), project overview (docx)
 
 archive/                     superseded material, kept for traceability - safe to delete
@@ -59,7 +68,7 @@ archive/                     superseded material, kept for traceability - safe t
 | Project target F1 >= 0.70 | **Not met.** Even an easier date-grouped cross-validation reaches only F1 0.40 / ROC-AUC 0.71 |
 | Severity model | macro-F1 0.290 (weak) |
 | Resilience index | ORD 50 / MEM 50 (both Moderate); the earlier "ORD 30 / MEM 70" was an artefact of the two-airport scaling plus the data problems |
-| Tests / verification | 10 unit tests pass; 15 of 16 verification checks pass (the failing one is the guide's flag-only "high risk" example, which scores 37%) |
+| Tests / verification | 23 tests pass; 15 of 16 verification checks pass (the failing one is the guide's flag-only "high risk" example, which scores 37%) |
 
 Details: `docs/model_report.md`, `docs/model_verification.md`.
 
@@ -69,7 +78,9 @@ python -m venv clears_env
 clears_env\Scripts\activate          # Windows;  source clears_env/bin/activate on Mac/Linux
 pip install -r requirements.txt
 python -m pytest tests -q
+streamlit run app/streamlit_app.py   # the dashboard, http://localhost:8501 (run from this folder so .streamlit/config.toml is found)
 ```
+After retraining or rebuilding the data, refresh the dashboard's hourly table with `python src/dashboard_data.py`.
 Retrain and regenerate every artefact from the current data (a few minutes):
 ```bash
 python src/model_train.py
@@ -84,8 +95,6 @@ python -c "import sys; sys.path.insert(0,'src'); import data_prep as d, features
 ```
 `run_pipeline(cancelled_policy='drop')` removes cancelled flights (default); `'disrupt'` keeps them labelled as disrupted. Set `CLEARS_DATA=<path>` to train on a different feature file. The virtual environment used during development lives outside OneDrive (`C:\Users\shrey\.venvs\clears_env`) because a venv inside OneDrive syncs tens of thousands of files.
 
-
-
 ## Decisions and open items
 1. **Cancelled flights:** 15,875 are removed (4.2% of departures). Counting them as disrupted would raise the disruption rate from 17.8% to about 21.3%. The team must choose, then regenerate and retrain.
 2. **Risk bands:** with the calibrated probability 91.5% of test flights are "Low" (< 0.30) and 1.7% "High" (> 0.65); the KPI doc (0.30 / 0.65) and the project report (0.50 / 0.80) also disagree. Pick one set.
@@ -95,3 +104,4 @@ python -c "import sys; sys.path.insert(0,'src'); import data_prep as d, features
 6. **Coverage:** four months per year, two airports; the test set has no winter month; in the test months MEM is more disrupted than ORD (the reverse of the full period).
 7. **Project report PDF (Person 4):** the abstract's "F1 exceeding 0.70" and "substantial improvement over logistic regression", the claim that SHAP confirmed `visibility_risk` / `storm_flag` / `wind_category` as leading predictors (they contribute under 0.1% each), the recommendation bands, the academic year, the citation mismatches and the blank student-details page need correcting. The PDF itself was not changed.
 8. **Approval:** Person 1 should review `src/` and the dataset before the numbers go into the report or slides.
+9. **Dashboard behaviour worth knowing:** the riskiest hours are driven by delays that have already built up, so weather what-ifs cannot raise them further (the simulator then starts in "Weather only" view and says so). The recommendation engine fires weather actions from the actual weather as well as from SHAP drivers, because weather rarely ranks among the model's top drivers. The risk bands (point 2) are read from `config.RISK_BANDS` everywhere.
