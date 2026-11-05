@@ -6,6 +6,19 @@ Predicts weather-driven flight disruptions at Chicago O'Hare (ORD) and Memphis (
 
 **Run the dashboard:** `pip install -r requirements.txt`, then `streamlit run app/streamlit_app.py` from this folder. It needs only files that are in the repository (`data/models/*.pkl`, `data/processed/dashboard_hourly.csv`, `resilience_scores.csv`).
 
+## Dashboard at a glance
+The dashboard describes one airport-hour at a time (the highest-risk hour of the chosen period, or one you pick) and has five tabs:
+
+| Tab | What it shows |
+|---|---|
+| Risk Overview | conditions that hour, disruption trend, what drives the risk (SHAP), when disruptions happen |
+| Scenario Simulator | what-if weather sliders and presets, before/after risk, how risk responds to each input |
+| Resilience Rankings | ranking table, bar chart, map and the four inputs behind the index |
+| Recommendations | suggested operational actions for the selected hour or the what-if scenario, plus a downloadable brief |
+| Model & Data | test metrics, calibration, what the model relies on, known limitations |
+
+Design notes: `docs/dashboard_layout.md`. Demo walkthrough: `docs/demo_script.md`. The map and web font load from the internet; everything else works offline.
+
 ## Directory map
 ```
 README.md                    this file
@@ -100,7 +113,7 @@ python -c "import sys; sys.path.insert(0,'src'); import data_prep as d, features
 2. **Risk bands:** with the calibrated probability 91.5% of test flights are "Low" (< 0.30) and 1.7% "High" (> 0.65); the KPI doc (0.30 / 0.65) and the project report (0.50 / 0.80) also disagree. Pick one set.
 3. **Resilience index:** meaningless with two airports (50 / 50). It needs >= 4 airports or fixed reference ranges.
 4. **F1 >= 0.70** is not reachable with these inputs (weather, time, short delay history); report the honest numbers.
-5. **Scenario simulator:** `scenario_risk()` uses the full model (base value = dashboard gauge). Combined extreme overrides go beyond the data (about 70 historical flights) and are an upper bound. `mode='weather'` gives an optional weather-only view.
+5. **Scenario simulator:** `scenario_risk()` uses the full model (base value = the risk shown in the dashboard's risk card). Combined extreme overrides go beyond the data (about 70 historical flights) and are an upper bound. `mode='weather'` gives an optional weather-only view.
 6. **Coverage:** four months per year, two airports; the test set has no winter month; in the test months MEM is more disrupted than ORD (the reverse of the full period).
 7. **Project report PDF (Person 4):** the abstract's "F1 exceeding 0.70" and "substantial improvement over logistic regression", the claim that SHAP confirmed `visibility_risk` / `storm_flag` / `wind_category` as leading predictors (they contribute under 0.1% each), the recommendation bands, the academic year, the citation mismatches and the blank student-details page need correcting. The PDF itself was not changed.
 8. **Approval:** Person 1 should review `src/` and the dataset before the numbers go into the report or slides.
